@@ -1,0 +1,12 @@
+{
+  "name": "FutureFarm",
+  "uuid": "a1dabe84-1751-4174-8a2f-38d70fd29dd6",
+  "creator": {
+    "version": "3.8.7"
+  },
+  "dependencies": {
+    "crypto-es": "^1.2.7"
+  },
+  "description": "Future Farm Game based on Oops Framework for Cocos Creator 3.8.7",
+  "version": "1.0.0"
+}
