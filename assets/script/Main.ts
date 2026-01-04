@@ -20,11 +20,31 @@ const { ccclass, property } = _decorator;
 @ccclass('Main')
 export class Main extends Root {
     onLoad() {
+        // 添加全局 Promise rejection 处理器，避免 PromiseRejectionEvent 报错
+        this.setupGlobalErrorHandlers();
+
         // 调用父类 onLoad，初始化框架模块（创建 oops.gui）
         super.onLoad();
 
         // 设置 UICamera 初始为 SOLID_COLOR
         this.initUICamera();
+    }
+
+    /** 设置全局错误处理器 */
+    private setupGlobalErrorHandlers() {
+        // 处理未捕获的 Promise rejection
+        if (typeof window !== 'undefined') {
+            window.addEventListener('unhandledrejection', (event: PromiseRejectionEvent) => {
+                // 阻止默认的错误报告
+                event.preventDefault();
+                // 输出更友好的错误信息
+                console.warn('[Main] Unhandled Promise Rejection:', event.reason);
+                // 如果有堆栈信息，也打印出来
+                if (event.reason && event.reason.stack) {
+                    console.warn('[Main] Stack:', event.reason.stack);
+                }
+            });
+        }
     }
 
     /** 初始化 UICamera 设置 */
@@ -72,21 +92,22 @@ export class Main extends Root {
 
     /**
      * 设置屏幕适配策略
+     * 不再覆盖项目设置，让 Cocos Creator 编辑器中的设置生效
      */
     private setResolutionPolicy() {
         try {
             const designSize = view.getDesignResolutionSize();
             const winSize = screen.windowSize;
+            const visibleSize = view.getVisibleSize();
 
-            // 使用 SHOW_ALL：保持设计分辨率比例，多余部分留黑边
-            view.setDesignResolutionSize(designSize.width, designSize.height, 0); // ResolutionPolicy.SHOW_ALL = 0
-
-            // 调试日志
-            console.log(`[Main] Resolution policy set to SHOW_ALL`);
+            // 不修改适配策略，使用项目设置（fitHeight: true）
+            // 只输出调试日志
+            console.log(`[Main] Using project default resolution policy`);
             console.log(`[Main] Design size: ${designSize.width}x${designSize.height}`);
             console.log(`[Main] Window size: ${winSize.width}x${winSize.height}`);
+            console.log(`[Main] Visible size: ${visibleSize.width}x${visibleSize.height}`);
         } catch (error) {
-            console.error('[Main] Failed to set resolution policy:', error);
+            console.error('[Main] Failed to get resolution info:', error);
         }
     }
 }

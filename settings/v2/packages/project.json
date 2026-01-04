@@ -1,15 +1,15 @@
 {
   "general": {
     "designResolution": {
-      "width": 750,
-      "height": 1344,
-      "fitWidth": true,
-      "fitHeight": false
+      "width": 1280,
+      "height": 720,
+      "fitWidth": false,
+      "fitHeight": true
     },
     "orientation": {
-      "landscapeLeft": false,
-      "landscapeRight": false,
-      "portrait": true,
+      "landscapeLeft": true,
+      "landscapeRight": true,
+      "portrait": false,
       "upsideDown": false
     },
     "highQuality": true

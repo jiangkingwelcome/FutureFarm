@@ -1,14 +1,14 @@
 /*
- * @Author: dgflash
- * @Date: 2021-07-03 16:13:17
- * @LastEditors: dgflash
- * @LastEditTime: 2022-08-05 18:25:56
+ * @Author: jiangking
+ * @Email: jiangkingwelcome@vip.qq.com
+ * @Date: 2025-01-03
+ * @Description: 游戏初始化资源加载
  */
 import { director } from "cc";
 import { oops } from "db://oops-framework/core/Oops";
 import { AsyncQueue, NextFunction } from "db://oops-framework/libs/collection/AsyncQueue";
 import { ecs } from "db://oops-framework/libs/ecs/ECS";
-import { Initialize } from "../Initialize";
+import type { Initialize } from "../Initialize";
 import { LoadingViewComp } from "../view/LoadingViewComp";
 import { GlobalMask } from "../../common/GlobalMask";
 
@@ -28,27 +28,26 @@ export class InitResSystem extends ecs.ComblockSystem implements ecs.IEntityEnte
     entityEnter(e: Initialize): void {
         var queue: AsyncQueue = new AsyncQueue();
 
-        // 最先展示 Loading UI，避免启动空帧导致黑屏
-        queue.push(async (next: NextFunction) => {
-            await e.addUi(LoadingViewComp);
-            // Loading 界面显示后，立即隐藏 GlobalMask
-            GlobalMask.instance.hide(0);
+        // 显示 Loading 界面（包含 Logo）
+        queue.push((next: NextFunction) => {
+            (async () => {
+                try {
+                    console.log('[InitRes] 显示 Loading 界面');
 
-            // 隐藏场景中的静态 LoadingBg 节点
-            try {
-                const scene = director.getScene();
-                const guiNode = scene?.getChildByPath('root/gui');
-                const loadingBgNode = guiNode?.getChildByName('LoadingBg');
-                if (loadingBgNode) {
-                    loadingBgNode.active = false;
-                    console.log('[InitRes] Static LoadingBg node hidden');
+                    // 隐藏 GlobalMask
+                    GlobalMask.instance.hide(0);
+
+                    // 隐藏场景中的静态 LoadingBg 节点
+                    this.hideStaticLoadingBg();
+
+                    // 显示 Loading 界面
+                    await e.addUi(LoadingViewComp);
+                    next();
+                } catch (error) {
+                    console.error('[InitRes] Loading 阶段出错:', error);
+                    next(); // 即使出错也继续执行
                 }
-            } catch (error) {
-                console.warn('[InitRes] Failed to hide LoadingBg node:', error);
-            }
-
-            console.log('[InitRes] Loading UI shown, GlobalMask hidden');
-            next();
+            })();
         });
 
         // 加载多语言包
@@ -59,6 +58,21 @@ export class InitResSystem extends ecs.ComblockSystem implements ecs.IEntityEnte
         this.onComplete(queue, e);
 
         queue.play();
+    }
+
+    /** 隐藏场景中的静态 LoadingBg 节点 */
+    private hideStaticLoadingBg(): void {
+        try {
+            const scene = director.getScene();
+            const guiNode = scene?.getChildByPath('root/gui');
+            const loadingBgNode = guiNode?.getChildByName('LoadingBg');
+            if (loadingBgNode) {
+                loadingBgNode.active = false;
+                console.log('[InitRes] 静态 LoadingBg 节点已隐藏');
+            }
+        } catch (error) {
+            console.warn('[InitRes] 隐藏 LoadingBg 失败:', error);
+        }
     }
 
     /** 加载化语言包（可选） */
@@ -93,8 +107,12 @@ export class InitResSystem extends ecs.ComblockSystem implements ecs.IEntityEnte
 
     /** 加载完成后移除初始化组件 */
     private onComplete(queue: AsyncQueue, e: Initialize) {
-        queue.complete = async () => {
-            e.remove(InitResComp);
+        queue.complete = () => {
+            try {
+                e.remove(InitResComp);
+            } catch (error) {
+                console.error('[InitRes] 移除初始化组件出错:', error);
+            }
         };
     }
 }

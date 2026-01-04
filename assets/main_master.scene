@@ -323,7 +323,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 71.162
+      "z": 1000
     },
     "_lrot": {
       "__type__": "cc.Quat",
@@ -358,13 +358,13 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "_projection": 1,
+    "_projection": 0,
     "_priority": 0,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 10,
+    "_orthoHeight": 360,
     "_near": 1,
-    "_far": 1000,
+    "_far": 2000,
     "_color": {
       "__type__": "cc.Color",
       "r": 51,
@@ -1232,8 +1232,8 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 375,
-      "y": 672,
+      "x": 640,
+      "y": 360,
       "z": 0
     },
     "_lrot": {
@@ -1318,7 +1318,7 @@
     "_priority": 1073741824,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 672,
+    "_orthoHeight": 360,
     "_near": 1,
     "_far": 2000,
     "_color": {
@@ -1364,8 +1364,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 750,
-      "height": 1344
+      "width": 1280,
+      "height": 720
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1393,7 +1393,7 @@
     "_cameraComponent": {
       "__id__": 34
     },
-    "_alignCanvasWithScreen": true,
+    "_alignCanvasWithScreen": false,
     "_id": "89ksaaTcNLCYuKnOydSJ2A"
   },
   {

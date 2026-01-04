@@ -6,8 +6,8 @@
  */
 
 import { ecs } from "db://oops-framework/libs/ecs/ECS";
-import { Account } from "../account/Account";
-import { Initialize } from "../initialize/Initialize";
+import type { Account } from "../account/Account";
+import type { Initialize } from "../initialize/Initialize";
 
 /** 游戏单例业务模块 */
 @ecs.register('SingletonModule')

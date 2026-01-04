@@ -6,6 +6,9 @@
   "files": [],
   "subMetas": {},
   "userData": {
+    "isBundle": true,
+    "bundleName": "gui",
+    "priority": 1,
     "compressionType": {},
     "isRemoteBundle": {}
   }

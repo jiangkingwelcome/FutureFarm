@@ -1,8 +1,10 @@
 /*
- * @Author: dgflash
+ * @Author: jiangking
+ * @Email: jiangkingwelcome@vip.qq.com
  * @Date: 2021-07-03 16:13:17
- * @LastEditors: dgflash
- * @LastEditTime: 2022-08-05 18:25:56
+ * @LastEditors: jiangking
+ * @LastEditTime: 2025-01-03
+ * @Description: 游戏资源加载界面
  */
 import { _decorator, tween, Tween, Node, Layers, UITransform, view, Widget, UIOpacity, Color, Vec3, Graphics } from "cc";
 import { gui } from "db://oops-framework/core/gui/Gui";
@@ -10,9 +12,9 @@ import { LayerType } from "db://oops-framework/core/gui/layer/LayerEnum";
 import { oops } from "db://oops-framework/core/Oops";
 import { ecs } from "db://oops-framework/libs/ecs/ECS";
 import { CCViewVM } from "db://oops-framework/module/common/CCViewVM";
-import { Initialize } from "../Initialize";
+import type { Initialize } from "../Initialize";
 import { smc } from "../../common/SingletonModuleComp";
-import { DemoViewComp } from "../../account/view/DemoViewComp";
+import { MenuViewComp } from "../../menu/view/MenuViewComp";
 
 const { ccclass, property } = _decorator;
 
@@ -58,32 +60,62 @@ export class LoadingViewComp extends CCViewVM<Initialize> {
         this.targetProgress = 0;
         this.realProgress = 0;
 
-        // 创建背景遮罩
-        this.createFullScreenMask();
-
-        // 修复背景节点适配问题
-        const bgNode = this.node.getChildByName('bg');
-        if (bgNode) {
-            let widget = bgNode.getComponent(Widget);
-            if (!widget) {
-                widget = bgNode.addComponent(Widget);
-            }
-            widget.isAlignLeft = true;
-            widget.isAlignRight = true;
-            widget.isAlignTop = true;
-            widget.isAlignBottom = true;
-            widget.left = -100;
-            widget.right = -100;
-            widget.top = -100;
-            widget.bottom = -100;
-            widget.target = this.node;
-            widget.updateAlignment();
-        }
+        // 修复背景节点适配问题 - 让背景覆盖整个屏幕（包括黑边）
+        this.fixBackgroundFullScreen();
 
         // 创建 Logo
         this.createLogo();
 
         this.enter();
+    }
+
+    /**
+     * 修复背景节点，使其完整显示在设计分辨率区域内
+     */
+    private fixBackgroundFullScreen(): void {
+        const bgNode = this.node.getChildByName('bg');
+        if (!bgNode) {
+            console.warn('[LoadingView] bg 节点未找到');
+            return;
+        }
+
+        // 背景图原始尺寸（2560x1440，比例16:9）
+        const imageWidth = 2560;
+        const imageHeight = 1440;
+        const imageRatio = imageWidth / imageHeight;
+
+        // 使用设计分辨率（1280x720）
+        const designSize = view.getDesignResolutionSize();
+        const designRatio = designSize.width / designSize.height;
+
+        let targetWidth: number;
+        let targetHeight: number;
+
+        // 让背景图完整显示在设计分辨率区域内（类似 SHOW_ALL）
+        if (imageRatio > designRatio) {
+            // 图片比设计区域更宽，以宽度为准
+            targetWidth = designSize.width;
+            targetHeight = targetWidth / imageRatio;
+        } else {
+            // 图片比设计区域更高或相等，以高度为准
+            targetHeight = designSize.height;
+            targetWidth = targetHeight * imageRatio;
+        }
+
+        // 设置 bg 的 UITransform 尺寸
+        let uiTransform = bgNode.getComponent(UITransform);
+        if (!uiTransform) {
+            uiTransform = bgNode.addComponent(UITransform);
+        }
+        uiTransform.setContentSize(targetWidth, targetHeight);
+        uiTransform.setAnchorPoint(0.5, 0.5);
+
+        // 确保 bg 居中
+        bgNode.setPosition(0, 0, 0);
+
+        console.log(`[LoadingView] 背景尺寸设置为: ${targetWidth.toFixed(0)}x${targetHeight.toFixed(0)}`);
+        console.log(`[LoadingView] 设计分辨率: ${designSize.width}x${designSize.height}`);
+        console.log(`[LoadingView] 图片比例: ${imageRatio.toFixed(2)}, 设计比例: ${designRatio.toFixed(2)}`);
     }
 
     /**
@@ -161,34 +193,58 @@ export class LoadingViewComp extends CCViewVM<Initialize> {
         }
         opacity.opacity = 0;
 
-        this.logoNode.setScale(0.9, 0.9, 1);
+        // 保存预制体中的原始 scale
+        const originalScale = this.logoNode.scale.clone();
 
+        // 初始缩小 90%
+        this.logoNode.setScale(
+            originalScale.x * 0.9,
+            originalScale.y * 0.9,
+            originalScale.z
+        );
+
+        // 弹出动画到原始大小
         tween(this.logoNode)
-            .to(0.5, { scale: new Vec3(1, 1, 1) }, { easing: 'backOut' })
+            .to(0.5, { scale: originalScale }, { easing: 'backOut' })
             .start();
 
         tween(opacity)
             .to(0.5, { opacity: 255 }, { easing: 'sineOut' })
             .start();
 
+        // 呼吸动画：在原始大小基础上微缩放
+        const breatheUp = new Vec3(
+            originalScale.x * 1.04,
+            originalScale.y * 1.04,
+            originalScale.z
+        );
+
         this.logoTween = tween(this.logoNode)
             .delay(0.6)
-            .to(1.5, { scale: new Vec3(1.04, 1.04, 1) }, { easing: 'sineInOut' })
-            .to(1.5, { scale: new Vec3(1, 1, 1) }, { easing: 'sineInOut' })
+            .to(1.5, { scale: breatheUp }, { easing: 'sineInOut' })
+            .to(1.5, { scale: originalScale }, { easing: 'sineInOut' })
             .union()
             .repeatForever()
             .start();
     }
 
     enter() {
-        this.loadRes();
+        this.loadRes().catch(error => {
+            console.error('[LoadingView] Error in loadRes:', error);
+        });
     }
 
     /** 加载资源 */
     private async loadRes() {
-        this.data.progress = 0;
-        await this.loadCustom();
-        this.loadGameRes();
+        try {
+            this.data.progress = 0;
+            await this.loadCustom();
+            this.loadGameRes();
+        } catch (error) {
+            console.error('[LoadingView] loadRes error:', error);
+            // 即使出错也尝试继续加载游戏资源
+            this.loadGameRes();
+        }
     }
 
     /** 加载游戏本地JSON数据 */
@@ -212,32 +268,34 @@ export class LoadingViewComp extends CCViewVM<Initialize> {
     }
 
     /** 加载完成事件 */
-    private async onCompleteCallback() {
-        try {
-            this.useFakeProgress = false;
-            this.data.prompt = "准备就绪...";
+    private onCompleteCallback() {
+        // 包装异步逻辑并捕获错误，避免 PromiseRejectionEvent
+        this.handleLoadComplete().catch(error => {
+            console.error('[LoadingView] Error in load complete handler:', error);
+        });
+    }
 
-            await this.updateProgressSmooth(1.0, 0.2);
+    /** 处理加载完成的异步逻辑 */
+    private async handleLoadComplete(): Promise<void> {
+        this.useFakeProgress = false;
+        this.data.prompt = "准备就绪...";
 
-            // 确保加载界面至少显示最小时间
-            const elapsedTime = Date.now() - this.startTime;
-            if (elapsedTime < this.minDisplayTime) {
-                const remainingTime = this.minDisplayTime - elapsedTime;
-                await new Promise(resolve => setTimeout(resolve, remainingTime));
-            }
+        await this.updateProgressSmooth(1.0, 0.2);
 
-            console.log('[LoadingView] Resource loading complete, entering game...');
-
-            // 打开示例主界面
-            await smc.account.addUi(DemoViewComp);
-
-            // Loading 界面淡出
-            this.fadeOutAndRemove();
-
-        } catch (error) {
-            console.error('[LoadingView] Error in onCompleteCallback:', error);
-            throw error;
+        // 确保加载界面至少显示最小时间
+        const elapsedTime = Date.now() - this.startTime;
+        if (elapsedTime < this.minDisplayTime) {
+            const remainingTime = this.minDisplayTime - elapsedTime;
+            await new Promise(resolve => setTimeout(resolve, remainingTime));
         }
+
+        console.log('[LoadingView] Resource loading complete, entering game...');
+
+        // 打开主菜单界面
+        await smc.account.addUi(MenuViewComp);
+
+        // Loading 界面淡出
+        this.fadeOutAndRemove();
     }
 
     /**

@@ -273,13 +273,18 @@ export class GlobalMask {
         fadeInDuration: number = GlobalMask.DEFAULT_DURATION,
         fadeOutDuration: number = GlobalMask.DEFAULT_DURATION
     ): void {
-        this.show(fadeInDuration, async () => {
-            try {
-                await switchCallback();
-            } catch (error) {
-                console.error('[GlobalMask] Transition callback error:', error);
-            }
-            this.hide(fadeOutDuration);
+        this.show(fadeInDuration, () => {
+            (async () => {
+                try {
+                    await switchCallback();
+                } catch (error) {
+                    console.error('[GlobalMask] Transition callback error:', error);
+                }
+                this.hide(fadeOutDuration);
+            })().catch(err => {
+                console.error('[GlobalMask] Transition async error:', err);
+                this.hide(fadeOutDuration);
+            });
         });
     }
 
