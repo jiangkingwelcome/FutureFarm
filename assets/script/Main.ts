@@ -14,6 +14,9 @@ import { GlobalMask } from './game/common/GlobalMask';
 import { smc } from './game/common/SingletonModuleComp';
 import { UIConfigData } from './game/common/config/GameUIConfig';
 import { Initialize } from './game/initialize/Initialize';
+import { GameState } from './game/gameState/GameState';
+import { Farm } from './game/farm/Farm';
+import { Factory } from './game/factory/Factory';
 
 const { ccclass, property } = _decorator;
 
@@ -79,6 +82,9 @@ export class Main extends Root {
     protected run() {
         smc.initialize = ecs.getEntity<Initialize>(Initialize);
         smc.account = ecs.getEntity<Account>(Account);
+        smc.gameState = ecs.getEntity<GameState>(GameState);
+        smc.farm = ecs.getEntity<Farm>(Farm);
+        smc.factory = ecs.getEntity<Factory>(Factory);
         console.log('[Main] Main initialization completed');
     }
 

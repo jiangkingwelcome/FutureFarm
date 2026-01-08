@@ -12,6 +12,12 @@ import { CCView } from "db://oops-framework/module/common/CCView";
 import { smc } from "../../common/SingletonModuleComp";
 import type { Account } from "../../account/Account";
 import { missionConfig } from "../../common/config/MissionConfig";
+import { testLoadMissionData } from "../../../test/data/MissionDataTest";
+import { oops } from "db://oops-framework/core/Oops";
+import { UIID } from "../../common/config/GameUIConfig";
+import { FarmDataMission } from "../../common/data/FarmData";
+import { TargetCommon } from "../../common/data/MissionData";
+import { StarMission } from "../../common/data/MissionData";
 
 const { ccclass, property } = _decorator;
 
@@ -55,6 +61,11 @@ export class MenuViewComp extends CCView<Account> {
             }
             
             console.log('[MenuView] ✅ 配置数据验证通过！');
+            
+            // 测试数据模型初始化
+            console.log('[MenuView] 开始测试数据模型...');
+            await testLoadMissionData();
+            console.log('[MenuView] ✅ 数据模型测试通过！');
         } catch (error) {
             console.error('[MenuView] ❌ 配置加载测试失败:', error);
         }
@@ -141,7 +152,7 @@ export class MenuViewComp extends CCView<Account> {
     }
 
     /** 点击开始游戏 */
-    private onStartGame(): void {
+    private async onStartGame(): Promise<void> {
         console.log('[MenuView] 点击开始游戏');
 
         // 停止动画
@@ -152,12 +163,45 @@ export class MenuViewComp extends CCView<Account> {
             tween(this.btnStart)
                 .to(0.1, { scale: new Vec3(0.9, 0.9, 1) })
                 .to(0.1, { scale: new Vec3(1, 1, 1) })
-                .call(() => {
-                    // TODO: 进入农场界面
+                .call(async () => {
+                    // 初始化游戏数据
+                    await this.initGameData();
+                    
+                    // 进入农场界面
                     console.log('[MenuView] 即将进入农场...');
+                    oops.gui.open(UIID.Farm);
                     this.remove();
                 })
                 .start();
+        }
+    }
+
+    /** 初始化游戏数据 */
+    private async initGameData(): Promise<void> {
+        try {
+            // 加载第1关配置
+            const config = await missionConfig.loadMission(1);
+            
+            // 初始化游戏状态
+            const targetCommon = new TargetCommon();
+            targetCommon.initFromConfig(config.targetCommon);
+            
+            const starMission = new StarMission();
+            starMission.initFromConfig(config.starCondition);
+            
+            const gameStateModel = smc.gameState.GameStateModel;
+            gameStateModel.initMission(1, targetCommon, starMission);
+            
+            // 初始化农场数据
+            const farmDataMission = new FarmDataMission();
+            farmDataMission.initFromConfig(config.farmData);
+            
+            const farmModel = smc.farm.FarmModel;
+            farmModel.initFromConfig(1, farmDataMission);
+            
+            console.log('[MenuView] ✅ 游戏数据初始化完成');
+        } catch (error) {
+            console.error('[MenuView] ❌ 游戏数据初始化失败:', error);
         }
     }
 

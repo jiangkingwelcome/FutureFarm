@@ -15,10 +15,13 @@ export enum UIID {
     Alert,
     /** 确认弹出窗口 */
     Confirm,
+    /** 农场界面 */
+    Farm,
 }
 
 /** 打开界面方式的配置数据 */
 export var UIConfigData: { [key: number]: UIConfig } = {
     [UIID.Alert]: { layer: LayerType.Dialog, prefab: "common/prefab/alert" },
     [UIID.Confirm]: { layer: LayerType.Dialog, prefab: "common/prefab/confirm" },
+    [UIID.Farm]: { layer: LayerType.UI, prefab: "farm/farm_view", bundle: "gui" },
 }
