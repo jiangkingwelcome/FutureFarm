@@ -1,0 +1,82 @@
+{
+  "id": 13,
+  "targetCommon": {
+    "startMoney": 1300,
+    "targetMoney": 0,
+    "timeMission": 15,
+    "maxCustomer": 52,
+    "targetCustomerRate": 0,
+    "itemsInShop": [],
+    "startScene": 2
+  },
+  "starCondition": {
+    "twoStar": 1920,
+    "threeStar": 3200,
+    "reward": [
+      1,
+      2,
+      3
+    ]
+  },
+  "farmData": {
+    "isCanSick": false,
+    "fields": [
+      {
+        "idField": 1,
+        "startNumber": 11,
+        "targetNumber": 0,
+        "startLevel": 1,
+        "targetLevel": 1,
+        "maxLevel": 1
+      },
+      {
+        "idField": 2,
+        "startNumber": 5,
+        "targetNumber": 0,
+        "startLevel": 1,
+        "targetLevel": 1,
+        "maxLevel": 1
+      },
+      {
+        "idField": 3,
+        "startNumber": 4,
+        "targetNumber": 0,
+        "startLevel": 1,
+        "targetLevel": 1,
+        "maxLevel": 1
+      }
+    ],
+    "breeds": [
+      {
+        "idBreed": 1,
+        "startNumber": 7,
+        "targetNumber": 0
+      },
+      {
+        "idBreed": 4,
+        "startNumber": 4,
+        "targetNumber": 0
+      },
+      {
+        "idBreed": 7,
+        "startNumber": 5,
+        "targetNumber": 0
+      },
+      {
+        "idBreed": 8,
+        "startNumber": 0,
+        "targetNumber": 0
+      }
+    ],
+    "harvestField": {
+      "idField": 1,
+      "targetNumber": 0
+    },
+    "harvestCage": {
+      "idField": 2,
+      "targetNumber": 0
+    }
+  },
+  "tip_vi": "Khi có cảnh báo ở nhà máy, hãy quay về để sữa chữa máy.",
+  "tip_en": "If machine is broken, you should come back to Factory and fix it."
+}

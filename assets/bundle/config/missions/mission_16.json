@@ -1,0 +1,82 @@
+{
+  "id": 16,
+  "targetCommon": {
+    "startMoney": 1350,
+    "targetMoney": 0,
+    "timeMission": 21,
+    "maxCustomer": 60,
+    "targetCustomerRate": 0,
+    "itemsInShop": [],
+    "startScene": 1
+  },
+  "starCondition": {
+    "twoStar": 2250,
+    "threeStar": 3050,
+    "reward": [
+      1,
+      2,
+      3
+    ]
+  },
+  "farmData": {
+    "isCanSick": false,
+    "fields": [
+      {
+        "idField": 1,
+        "startNumber": 9,
+        "targetNumber": 0,
+        "startLevel": 1,
+        "targetLevel": 2,
+        "maxLevel": 2
+      },
+      {
+        "idField": 2,
+        "startNumber": 5,
+        "targetNumber": 0,
+        "startLevel": 1,
+        "targetLevel": 2,
+        "maxLevel": 6
+      },
+      {
+        "idField": 3,
+        "startNumber": 4,
+        "targetNumber": 0,
+        "startLevel": 2,
+        "targetLevel": 1,
+        "maxLevel": 2
+      }
+    ],
+    "breeds": [
+      {
+        "idBreed": 1,
+        "startNumber": 0,
+        "targetNumber": 0
+      },
+      {
+        "idBreed": 4,
+        "startNumber": 0,
+        "targetNumber": 0
+      },
+      {
+        "idBreed": 7,
+        "startNumber": 0,
+        "targetNumber": 0
+      },
+      {
+        "idBreed": 8,
+        "startNumber": 0,
+        "targetNumber": 0
+      }
+    ],
+    "harvestField": {
+      "idField": 1,
+      "targetNumber": 0
+    },
+    "harvestCage": {
+      "idField": 2,
+      "targetNumber": 0
+    }
+  },
+  "tip_vi": "Bạn nên sử dụng tòa nhà Market Research và tòa nhà Technology.",
+  "tip_en": "You should use Market Research Building and Technology Building."
+}

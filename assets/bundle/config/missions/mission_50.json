@@ -1,0 +1,92 @@
+{
+  "id": 50,
+  "targetCommon": {
+    "startMoney": 300,
+    "targetMoney": 0,
+    "timeMission": 34,
+    "maxCustomer": 80,
+    "targetCustomerRate": 450,
+    "itemsInShop": [],
+    "startScene": 1
+  },
+  "starCondition": {
+    "twoStar": 4000,
+    "threeStar": 5000,
+    "reward": [
+      1,
+      1,
+      2
+    ]
+  },
+  "farmData": {
+    "isCanSick": false,
+    "fields": [
+      {
+        "idField": 1,
+        "startNumber": 11,
+        "targetNumber": 0,
+        "startLevel": 2,
+        "targetLevel": 1,
+        "maxLevel": 3
+      },
+      {
+        "idField": 2,
+        "startNumber": 5,
+        "targetNumber": 0,
+        "startLevel": 2,
+        "targetLevel": 1,
+        "maxLevel": 3
+      },
+      {
+        "idField": 3,
+        "startNumber": 4,
+        "targetNumber": 0,
+        "startLevel": 2,
+        "targetLevel": 1,
+        "maxLevel": 2
+      }
+    ],
+    "breeds": [
+      {
+        "idBreed": 1,
+        "startNumber": 0,
+        "targetNumber": 0
+      },
+      {
+        "idBreed": 3,
+        "startNumber": 0,
+        "targetNumber": 0
+      },
+      {
+        "idBreed": 4,
+        "startNumber": 0,
+        "targetNumber": 0
+      },
+      {
+        "idBreed": 5,
+        "startNumber": 0,
+        "targetNumber": 0
+      },
+      {
+        "idBreed": 7,
+        "startNumber": 0,
+        "targetNumber": 0
+      },
+      {
+        "idBreed": 8,
+        "startNumber": 0,
+        "targetNumber": 0
+      }
+    ],
+    "harvestField": {
+      "idField": 1,
+      "targetNumber": 0
+    },
+    "harvestCage": {
+      "idField": 2,
+      "targetNumber": 0
+    }
+  },
+  "tip_vi": "Bạn nên nâng cấp ruộng và chuồng.",
+  "tip_en": "You should upgrade fields and "
+}

@@ -1,0 +1,51 @@
+{
+  "id": 2,
+  "targetCommon": {
+    "startMoney": 300,
+    "targetMoney": 0,
+    "timeMission": 5,
+    "maxCustomer": 30,
+    "targetCustomerRate": 70,
+    "itemsInShop": [],
+    "startScene": 3
+  },
+  "starCondition": {
+    "twoStar": 700,
+    "threeStar": 1000,
+    "reward": [
+      1,
+      2,
+      3
+    ]
+  },
+  "farmData": {
+    "isCanSick": false,
+    "fields": [
+      {
+        "idField": 1,
+        "startNumber": 11,
+        "targetNumber": 0,
+        "startLevel": 1,
+        "targetLevel": 1,
+        "maxLevel": 1
+      }
+    ],
+    "breeds": [
+      {
+        "idBreed": 1,
+        "startNumber": 11,
+        "targetNumber": 0
+      }
+    ],
+    "harvestField": {
+      "idField": 1,
+      "targetNumber": 0
+    },
+    "harvestCage": {
+      "idField": 2,
+      "targetNumber": 0
+    }
+  },
+  "tip_vi": "Thuê nhiều nhân viên để bán được nhiều sản phầm hơn.",
+  "tip_en": "If you want to sell more products, you need to hire more staffs."
+}

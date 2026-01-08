@@ -1,0 +1,92 @@
+{
+  "id": 37,
+  "targetCommon": {
+    "startMoney": 540,
+    "targetMoney": 0,
+    "timeMission": 23,
+    "maxCustomer": 50,
+    "targetCustomerRate": 0,
+    "itemsInShop": [],
+    "startScene": 1
+  },
+  "starCondition": {
+    "twoStar": 4500,
+    "threeStar": 6000,
+    "reward": [
+      1,
+      1,
+      2
+    ]
+  },
+  "farmData": {
+    "isCanSick": false,
+    "fields": [
+      {
+        "idField": 1,
+        "startNumber": 9,
+        "targetNumber": 0,
+        "startLevel": 1,
+        "targetLevel": 1,
+        "maxLevel": 2
+      },
+      {
+        "idField": 2,
+        "startNumber": 5,
+        "targetNumber": 0,
+        "startLevel": 1,
+        "targetLevel": 1,
+        "maxLevel": 2
+      },
+      {
+        "idField": 3,
+        "startNumber": 4,
+        "targetNumber": 0,
+        "startLevel": 1,
+        "targetLevel": 1,
+        "maxLevel": 2
+      }
+    ],
+    "breeds": [
+      {
+        "idBreed": 1,
+        "startNumber": 0,
+        "targetNumber": 0
+      },
+      {
+        "idBreed": 3,
+        "startNumber": 9,
+        "targetNumber": 0
+      },
+      {
+        "idBreed": 4,
+        "startNumber": 0,
+        "targetNumber": 0
+      },
+      {
+        "idBreed": 5,
+        "startNumber": 5,
+        "targetNumber": 0
+      },
+      {
+        "idBreed": 7,
+        "startNumber": 0,
+        "targetNumber": 0
+      },
+      {
+        "idBreed": 8,
+        "startNumber": 0,
+        "targetNumber": 0
+      }
+    ],
+    "harvestField": {
+      "idField": 1,
+      "targetNumber": 0
+    },
+    "harvestCage": {
+      "idField": 2,
+      "targetNumber": 0
+    }
+  },
+  "tip_vi": "Kết hợp sử dụng các tòa nhà để đạt hiệu quả cao nhất.",
+  "tip_en": "Combine the buildings to get better result."
+}

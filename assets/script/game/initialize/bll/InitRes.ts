@@ -96,13 +96,18 @@ export class InitResSystem extends ecs.ComblockSystem implements ecs.IEntityEnte
             oops.res.loadDir("common", next);
         });
 
-        // TODO: 在这里加载你的游戏 bundle
-        // 示例:
-        // queue.push(async (next: NextFunction) => {
-        //     console.log('[InitRes] Loading game bundle...');
-        //     const bundle = await oops.res.loadBundle('your-bundle-name');
-        //     next();
-        // });
+        // 加载 bundle（包含配置文件）
+        queue.push(async (next: NextFunction) => {
+            try {
+                console.log('[InitRes] 加载 bundle...');
+                await oops.res.loadBundle('bundle');
+                console.log('[InitRes] Bundle 加载完成');
+                next();
+            } catch (error) {
+                console.error('[InitRes] Bundle 加载失败:', error);
+                next(); // 即使失败也继续
+            }
+        });
     }
 
     /** 加载完成后移除初始化组件 */

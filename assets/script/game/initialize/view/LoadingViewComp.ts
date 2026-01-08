@@ -249,12 +249,11 @@ export class LoadingViewComp extends CCViewVM<Initialize> {
 
     /** 加载游戏本地JSON数据 */
     private loadCustom() {
-        this.data.prompt = "加载游戏数据...";
+        // 不显示状态提示
     }
 
     /** 加载初始游戏内容资源 */
     private loadGameRes() {
-        this.data.prompt = "加载游戏内容...";
         oops.res.loadDir("game", this.onProgressCallback.bind(this), this.onCompleteCallback.bind(this));
     }
 
@@ -289,7 +288,15 @@ export class LoadingViewComp extends CCViewVM<Initialize> {
             await new Promise(resolve => setTimeout(resolve, remainingTime));
         }
 
-        console.log('[LoadingView] Resource loading complete, entering game...');
+        console.log('[LoadingView] Resource loading complete, loading gui bundle...');
+
+        // 加载 gui bundle
+        try {
+            await oops.res.loadBundle('gui');
+            console.log('[LoadingView] GUI bundle loaded, opening menu...');
+        } catch (error) {
+            console.error('[LoadingView] Failed to load gui bundle:', error);
+        }
 
         // 打开主菜单界面
         await smc.account.addUi(MenuViewComp);

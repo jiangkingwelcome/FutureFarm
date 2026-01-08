@@ -1,0 +1,82 @@
+{
+  "id": 12,
+  "targetCommon": {
+    "startMoney": 2200,
+    "targetMoney": 0,
+    "timeMission": 19,
+    "maxCustomer": 56,
+    "targetCustomerRate": 0,
+    "itemsInShop": [],
+    "startScene": 1
+  },
+  "starCondition": {
+    "twoStar": 3220,
+    "threeStar": 4000,
+    "reward": [
+      1,
+      2,
+      3
+    ]
+  },
+  "farmData": {
+    "isCanSick": false,
+    "fields": [
+      {
+        "idField": 1,
+        "startNumber": 10,
+        "targetNumber": 0,
+        "startLevel": 1,
+        "targetLevel": 1,
+        "maxLevel": 1
+      },
+      {
+        "idField": 2,
+        "startNumber": 5,
+        "targetNumber": 0,
+        "startLevel": 1,
+        "targetLevel": 1,
+        "maxLevel": 1
+      },
+      {
+        "idField": 3,
+        "startNumber": 3,
+        "targetNumber": 0,
+        "startLevel": 1,
+        "targetLevel": 1,
+        "maxLevel": 1
+      }
+    ],
+    "breeds": [
+      {
+        "idBreed": 1,
+        "startNumber": 0,
+        "targetNumber": 0
+      },
+      {
+        "idBreed": 4,
+        "startNumber": 0,
+        "targetNumber": 0
+      },
+      {
+        "idBreed": 7,
+        "startNumber": 0,
+        "targetNumber": 0
+      },
+      {
+        "idBreed": 8,
+        "startNumber": 0,
+        "targetNumber": 0
+      }
+    ],
+    "harvestField": {
+      "idField": 1,
+      "targetNumber": 0
+    },
+    "harvestCage": {
+      "idField": 2,
+      "targetNumber": 0
+    }
+  },
+  "tip_vi": "Bạn nên sử dụng tòa nhà Market Research.",
+  "tip_en": "You should use Market Research Building."
+}

@@ -1,0 +1,64 @@
+{
+  "id": 3,
+  "targetCommon": {
+    "startMoney": 800,
+    "targetMoney": 0,
+    "timeMission": 9,
+    "maxCustomer": 48,
+    "targetCustomerRate": 0,
+    "itemsInShop": [],
+    "startScene": 1
+  },
+  "starCondition": {
+    "twoStar": 1500,
+    "threeStar": 2200,
+    "reward": [
+      1,
+      2,
+      3
+    ]
+  },
+  "farmData": {
+    "isCanSick": false,
+    "fields": [
+      {
+        "idField": 1,
+        "startNumber": 11,
+        "targetNumber": 0,
+        "startLevel": 1,
+        "targetLevel": 1,
+        "maxLevel": 1
+      },
+      {
+        "idField": 2,
+        "startNumber": 5,
+        "targetNumber": 0,
+        "startLevel": 1,
+        "targetLevel": 1,
+        "maxLevel": 1
+      }
+    ],
+    "breeds": [
+      {
+        "idBreed": 1,
+        "startNumber": 11,
+        "targetNumber": 11
+      },
+      {
+        "idBreed": 7,
+        "startNumber": 0,
+        "targetNumber": 5
+      }
+    ],
+    "harvestField": {
+      "idField": 1,
+      "targetNumber": 0
+    },
+    "harvestCage": {
+      "idField": 2,
+      "targetNumber": 0
+    }
+  },
+  "tip_vi": " Thuê nhân viên khi đã có cả 3 loại sản phẩm: bánh mì, sữa tươi, pho mai.",
+  "tip_en": "If you have bread, milk bottle and cheese, you should hire staffs."
+}
